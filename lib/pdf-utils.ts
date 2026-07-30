@@ -643,6 +643,18 @@ export async function applyPDFEdits(
   return pdf.save();
 }
 
+export interface PDFSummary {
+  title: string;
+  overview: string;
+  keyPoints: string[];
+  importantDates: string[];
+  importantNumbers: string[];
+  actionItems: string[];
+  sentiment: "positive" | "neutral" | "negative";
+  readingTime: number;
+  wordCount: number;
+}
+
 export async function summarizePDF(
   file: File,
   onStage?: (stage: string) => void
@@ -670,65 +682,29 @@ export async function summarizePDF(
     );
   }
 
-  // Step 2 — call Anthropic API directly from browser
+  // Step 2 — call your server-side summarization endpoint
   onStage?.("AI is analyzing your document…");
   const truncated = fullText.slice(0, 48000);
 
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
+  const response = await fetch("/api/summarize-pdf", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": "YOUR_API_KEY_HERE",
-      "anthropic-version": "2023-06-01",
-      "anthropic-dangerous-allow-browser": "true",
     },
     body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 1500,
-      messages: [
-        {
-          role: "user",
-          content: `Analyze this PDF content from "${file.name}" and return a structured summary.
-
-Return ONLY valid JSON in this exact format, no markdown, no explanation:
-{
-  "title": "document title or main topic",
-  "overview": "2-3 sentence executive summary",
-  "keyPoints": ["point 1", "point 2", "point 3", "point 4", "point 5"],
-  "importantDates": ["any dates or deadlines mentioned, empty array if none"],
-  "importantNumbers": ["key figures, amounts, stats, empty array if none"],
-  "actionItems": ["action items or next steps, empty array if none"],
-  "sentiment": "positive",
-  "readingTime": 5,
-  "wordCount": 1200
-}
-
-PDF Content:
-${truncated}`,
-        },
-      ],
+      fileName: file.name,
+      text: truncated,
     }),
   });
 
   if (!response.ok) {
     const err = await response.json().catch(() => ({}));
     throw new Error(
-      err?.error?.message ?? "AI summarization failed. Please check your API key."
+      err?.error ?? "AI summarization failed. Please try again."
     );
   }
 
-  const data = await response.json();
-  const raw = data.content?.[0]?.text ?? "{}";
-
-  // Clean response — remove markdown fences if present
-  const cleaned = raw.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
-
-  let summary: PDFSummary;
-  try {
-    summary = JSON.parse(cleaned);
-  } catch {
-    throw new Error("Failed to parse AI response. Please try again.");
-  }
+  const summary: PDFSummary = await response.json();
 
   onStage?.("Done!");
   return summary;
