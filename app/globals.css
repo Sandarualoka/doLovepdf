@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-brand: #4F46E5;
+  --color-brand-light: #EEF2FF;
+  --color-brand-dark: #3730A3;
+  --color-surface: #F8F9FB;
+  --color-card: #FFFFFF;
+  --color-border: #E5E7EB;
+  --color-text: #111827;
+  --color-muted: #6B7280;
+  --color-accent: #06B6D4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tool-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tool-card:hover {
+  border-color: var(--color-brand);
+  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.1);
+  transform: translateY(-2px);
+}
+
+.dropzone-area {
+  border: 2px dashed var(--color-border);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  background: var(--color-surface);
+}
+
+.dropzone-area:hover,
+.dropzone-area.active {
+  border-color: var(--color-brand);
+  background: var(--color-brand-light);
+}
+
+.btn-primary {
+  background: var(--color-brand);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.625rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary:hover {
+  background: var(--color-brand-dark);
+}
+
+.btn-primary:disabled {
+  background: #C7D2FE;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-ghost:hover {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.file-pill {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-bar {
+  height: 6px;
+  background: #E5E7EB;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-brand), var(--color-accent));
+  border-radius: 99px;
+  transition: width 0.3s ease;
+}
+
+.badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.badge-new {
+  background: #DCFCE7;
+  color: #15803D;
+}
+
+.badge-hot {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.success-box {
+  background: var(--color-card);
+  border: 1px solid #BBF7D0;
+  border-radius: 14px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.tab-btn {
+  padding: 6px 16px;
+  border-radius: 99px;
+  border: 1px solid var(--color-border);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--color-card);
+  color: var(--color-muted);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  color: var(--color-text);
+  border-color: #9CA3AF;
+}
+
+.tab-btn.active {
+  background: var(--color-brand);
+  color: white;
+  border-color: var(--color-brand);
+}
+/* Background removal animations */
+@keyframes bgPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.6; }
+}
+
+@keyframes bgOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
