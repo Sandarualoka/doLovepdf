@@ -30,6 +30,7 @@ import {
   removeImageBackground,
   downloadBlob,
   downloadZip,
+  protectPDF,         
   type RedactionBox,
   type SignaturePlacement,
   type PDFEditElement,
