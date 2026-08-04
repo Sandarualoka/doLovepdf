@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "DoLovePDF — Free Online PDF Tools",
+    default: "DoLovePDF",
     template: "%s | DoLovePDF",
   },
   description:
@@ -92,6 +92,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="https://res.cloudinary.com/dzwv7wvdp/image/upload/v1782796812/logo_vjke3b-removebg-preview_gqehfz.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
